@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./TaskForm.css";
+import "./taskform.css";
 import { useTaskStore } from "../../stores/useTaskStore";
 import { useBoardStore } from "../../stores/useBoardStore";
 import { useAuthStore } from "../../stores/useAuthStore";
