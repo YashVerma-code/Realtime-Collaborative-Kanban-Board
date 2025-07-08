@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { io } from "socket.io-client";
 
 const BASE_URL =
-  import.meta.env.VITE_BACKEND_BASE_URL || "http://localhost:8080";
+  import.meta.env.VITE_BACKEND_BASE_URL || "https://kanban-board-service.onrender.com";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
