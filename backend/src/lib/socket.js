@@ -8,8 +8,20 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://realtime-collaborative-kanban-board.vercel.app",
+  process.env.FRONTEND_URL
+];
+
 app.use(cors({
-  origin:[ "http://localhost:5173", "https://realtime-collaborative-kanban-board.vercel.app",process.env.FRONTEND_URL],// your frontend origin
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 
