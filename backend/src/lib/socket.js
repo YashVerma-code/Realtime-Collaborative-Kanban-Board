@@ -56,16 +56,6 @@ export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
 
-io.use((socket, next) => {
-  const token = socket.handshake.auth.token;
-  // Validate JWT token here
-  if (isValidToken(token)) {
-    next();
-  } else {
-    next(new Error("Authentication error"));
-  }
-});
-
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
   console.log("Rooms: ",socket.rooms)
