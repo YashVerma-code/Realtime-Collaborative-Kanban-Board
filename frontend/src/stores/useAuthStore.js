@@ -60,6 +60,7 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Logged In Successfully!");
       get().connectSocket();
     } catch (error) {
+      console.log("Error: ",error);
       set({ authUser: null });
       console.log("Error: ",error);
       toast.error(error.response.data.message);
