@@ -12,6 +12,7 @@ export const useBoardStore = create((set, get) => ({
   isAddingBoard: false,
   isUpdatingBoardId: null,
   isDeletingBoard: false,
+  availableBoardMembers: [],
   logs: [],
   totalLogs: 0,
 
@@ -113,5 +114,22 @@ export const useBoardStore = create((set, get) => ({
       toast.error(error.response?.data?.message || "Fetch failed");
     }
   },
-}));
+  fetchboardMembers: async () => {
+    try {
+      const selectedBoard = get().selectedBoard;
 
+      if (!selectedBoard) {
+        toast.error("Board is not selected");
+        return;
+      }
+
+      const members = selectedBoard.members || [];
+      set({ availableBoardMembers: members });
+
+      toast.success("Board members loaded successfully");
+    } catch (error) {
+      console.log("Error while fetching board members:", error);
+      toast.error("Error while fetching board members");
+    }
+  },
+}));

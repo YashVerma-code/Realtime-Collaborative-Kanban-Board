@@ -9,7 +9,7 @@ const TaskForm = ({
   editingTask = null,
   isEditing = false,
 }) => {
-  const { availableMembers, fetchUsers } = useAuthStore();
+  const { availableBoardMembers,fetchboardMembers  } = useBoardStore();
   const {
     isCreatingTask,
     createTask,
@@ -39,8 +39,8 @@ const TaskForm = ({
   }, [assignedUser]);
 
   useEffect(() => {
-    // console.log("Available members: ", availableMembers);
-    fetchUsers();
+    // console.log("Available members: ", availableBoardMembers);
+    fetchboardMembers();
   }, [selectedBoard]);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const TaskForm = ({
 
     // If manually selecting assignedTo, also update the store
     if (field === "assignedTo") {
-      const selectedMember = availableMembers.find(
+      const selectedMember = availableBoardMembers.find(
         (member) => member._id === value
       );
       setAssignedUser(selectedMember || null);
@@ -202,7 +202,7 @@ const TaskForm = ({
                 }
               >
                 <option value="">Select team member...</option>
-                {availableMembers.map((member) => (
+                {availableBoardMembers.map((member) => (
                   <option key={member._id} value={member._id}>
                     {member.fullName.toUpperCase()}
                   </option>
@@ -228,7 +228,7 @@ const TaskForm = ({
               <p className="assignment-confirmation">
                 ✅ Assigned to{" "}
                 {
-                  availableMembers.find((m) => m._id === formData.assignedTo)
+                  availableBoardMembers.find((m) => m._id === formData.assignedTo)
                     ?.fullName
                 }
               </p>

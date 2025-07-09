@@ -51,7 +51,7 @@ export const getBoard = async (req, res) => {
   try {
     const board = await Board.findById(req.params.id).populate(
       "members",
-      "name"
+      "fullName _id email profilePic createdAt updatedAt"
     );
     if (!board) return res.status(404).json({ message: "Board not found" });
 
