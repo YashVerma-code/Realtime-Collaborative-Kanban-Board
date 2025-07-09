@@ -32,6 +32,20 @@ export default function Navbar() {
     logout();
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        !e.target.closest(".dropdown-menu") &&
+        !e.target.closest(".profile-button")
+      ) {
+        setIsProfileDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <nav className="navbar" onClick={() => setIsProfileDropdownOpen(false)}>
       <div className="navbar-container">
@@ -178,12 +192,12 @@ export default function Navbar() {
                   <span>Home</span>
                 </Link>
                 <Link
-                  to={"/setting"}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  to={"/activitylog"}
+                  onClick={() => setIsProfileDropdownOpen(false)}
                   className="mobile-menu-item"
                 >
                   <Settings />
-                  <span>Settings</span>
+                  <span>Action Log</span>
                 </Link>
                 <Link
                   to={"/profile"}

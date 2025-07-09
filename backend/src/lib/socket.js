@@ -9,9 +9,10 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin:[ "http://localhost:5173", "https://realtime-collaborative-kanban-board.vercel.app/",process.env.FRONTEND_URL],// your frontend origin
+  origin:[ "http://localhost:5173", "https://realtime-collaborative-kanban-board.vercel.app",process.env.FRONTEND_URL],// your frontend origin
   credentials: true
 }));
+
 
 const server = http.createServer(app);
 console.log("frontend: ", process.env.FRONTEND_URL);
