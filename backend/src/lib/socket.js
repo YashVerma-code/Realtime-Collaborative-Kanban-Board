@@ -14,6 +14,7 @@ const allowedOrigins = [
   process.env.FRONTEND_URL
 ];
 
+app.set('trust proxy', 1);
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -31,7 +32,7 @@ console.log("frontend: ", process.env.FRONTEND_URL);
 
 const io = new Server(server, {
    cors: {
-    origin: ["http://localhost:5173","https://realtime-collaborative-kanban-board.vercel.app/",process.env.FRONTEND_URL],
+    origin: ["http://localhost:5173","https://realtime-collaborative-kanban-board.vercel.app",process.env.FRONTEND_URL],
     credentials: true
   }
 });
