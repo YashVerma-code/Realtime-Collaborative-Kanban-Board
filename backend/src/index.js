@@ -6,7 +6,6 @@ import boardRoutes from "./routes/board.routes.js";
 import dbConnect from "./lib/dbconnect.js";
 import cookieParser from "cookie-parser";
 import { app, server } from "./lib/socket.js";
-import axios from "axios";
 dotenv.config();
 
 const PORT = process.env.PORT || 10000;
