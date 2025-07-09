@@ -18,8 +18,8 @@ import Profile from "./pages/Profile/Profile.jsx";
 function App() {
   const { authUser, checkAuth, isCheckingAuth, socket ,fetchUsers} = useAuthStore();
   const { setTasks } = useTaskStore();
-  const { selectedBoard,getBoards,fetchLogs } = useBoardStore();
-  // const { theme } = useThemeStore();
+  const { selectedBoard,getBoards,fetchLogs,fetchboardMembers } = useBoardStore();
+
 
   useEffect(() => {
     checkAuth();
@@ -31,6 +31,7 @@ function App() {
   const refreshBoards = () => {
     getBoards();     
     fetchUsers(); 
+    fetchboardMembers();
   };
 
   socket.on("board:create", refreshBoards);
