@@ -1,5 +1,6 @@
-![image](https://github.com/user-attachments/assets/4cf9deed-94fa-4f96-a1eb-79ff268a09da)
+
 # Task Management System
+---
 ![image](https://github.com/user-attachments/assets/a6954fcc-8c3f-431a-a58b-680307e59525)
 
 A comprehensive task management application built with modern web technologies, featuring intelligent task assignment, real-time collaboration, and conflict resolution.
