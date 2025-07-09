@@ -3,9 +3,8 @@ import { axiosInstance } from "../lib/axios";
 import { toast } from "sonner";
 import { io } from "socket.io-client";
 
-const BASE_URL =
-  import.meta.env.VITE_BACKEND_BASE_URL || "https://kanban-board-service.onrender.com";
-
+const BASE_URL =import.meta.env.VITE_BACKEND_BASE_URL;
+console.log("Base URL:", BASE_URL);
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   onlineUsers: null,
