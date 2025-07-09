@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { io } from "socket.io-client";
 
 const BASE_URL =import.meta.env.VITE_BACKEND_BASE_URL;
-console.log("Base URL:", BASE_URL);
+// console.log("Base URL:", BASE_URL);
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   onlineUsers: null,
@@ -51,15 +51,14 @@ export const useAuthStore = create((set, get) => ({
 
   login: async (data) => {
     try {
-      console.log("Data : ", data);
+      // console.log("Data : ", data);
       set({ isLoggingIn: true });
       const res = await axiosInstance.post("/auth/login", data);
-      console.log("Response : ", res);
+      // console.log("Response : ", res);
       set({ authUser: res.data });
       toast.success("Logged In Successfully!");
       get().connectSocket();
     } catch (error) {
-      console.log("Error: ",error);
       set({ authUser: null });
       console.log("Error: ",error);
       toast.error(error.response.data.message);

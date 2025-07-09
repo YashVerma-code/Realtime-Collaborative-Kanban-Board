@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Plus, MoreVertical, Edit2, Trash2, UserCheck, X } from "lucide-react";
+import {
+  Plus,
+  MoreVertical,
+  Edit2,
+  Trash2,
+  UserCheck,
+  X,
+  User,
+} from "lucide-react";
 import TaskForm from "../TaskForm/TaskForm";
 import { useBoardStore } from "../../stores/useBoardStore";
 import { useTaskStore } from "../../stores/useTaskStore";
@@ -15,7 +23,6 @@ export default function BoardContainer() {
   const [reassignTask, setReassignTask] = useState(null);
   const [selectedAssignee, setSelectedAssignee] = useState("");
 
-  const { selectedBoard } = useBoardStore();
   const {
     setTasks,
     activeTasks,
@@ -25,13 +32,16 @@ export default function BoardContainer() {
     setDraggingTask,
     changeStatus,
     updateTask,
-    isUpdatingTask,removeTask
+    isUpdatingTask,
+    removeTask,
   } = useTaskStore();
-  const { availableMembers, fetchUsers } = useAuthStore();
+  const { availableBoardMembers, fetchboardMembers, selectedBoard } =
+    useBoardStore();
 
   useEffect(() => {
     if (!selectedBoard) return;
     setTasks();
+    fetchboardMembers();
   }, [selectedBoard]);
 
   // Close menu when clicking outside
@@ -48,15 +58,15 @@ export default function BoardContainer() {
   const handleDrop = async (event, key) => {
     event.preventDefault();
     if (!draggingTask) return;
-    if(draggingTask.status===key)return;
-    console.log(
-      "Key : ",
-      key,
-      " BoardId : ",
-      selectedBoard._id,
-      "DraggingTaskID : ",
-      draggingTask._id
-    );
+    if (draggingTask.status === key) return;
+    // console.log(
+    //   "Key : ",
+    //   key,
+    //   " BoardId : ",
+    //   selectedBoard._id,
+    //   "DraggingTaskID : ",
+    //   draggingTask._id
+    // );
     await changeStatus(
       { status: key, boardId: selectedBoard._id },
       draggingTask._id
@@ -96,7 +106,7 @@ export default function BoardContainer() {
       assignedTo: selectedAssignee,
     };
 
-    await updateTask(updatedTask,reassignTask._id);
+    await updateTask(updatedTask, reassignTask._id);
     setShowReassignModal(false);
     setReassignTask(null);
     setSelectedAssignee("");
@@ -204,7 +214,7 @@ export default function BoardContainer() {
     return configs[key] || configs.todo;
   };
 
-    if (!selectedBoard) {
+  if (!selectedBoard) {
     return (
       <section className="right-board-container">
         <div className="board-container empty">
@@ -238,9 +248,32 @@ export default function BoardContainer() {
                   opacity="0.3"
                 />
                 <rect
-                  x="5" y="6" width="3" height="2" rx="1" fill="currentColor" opacity="0.2"/>
-                <rect x="5" y="10" width="3" height="2" rx="1" fill="currentColor" opacity="0.2" />
-                <rect x="16" y="6" width="3" height="2" rx="1" fill="currentColor" opacity="0.2"/>
+                  x="5"
+                  y="6"
+                  width="3"
+                  height="2"
+                  rx="1"
+                  fill="currentColor"
+                  opacity="0.2"
+                />
+                <rect
+                  x="5"
+                  y="10"
+                  width="3"
+                  height="2"
+                  rx="1"
+                  fill="currentColor"
+                  opacity="0.2"
+                />
+                <rect
+                  x="16"
+                  y="6"
+                  width="3"
+                  height="2"
+                  rx="1"
+                  fill="currentColor"
+                  opacity="0.2"
+                />
                 <rect
                   x="16"
                   y="10"
@@ -306,6 +339,42 @@ export default function BoardContainer() {
               <Plus className="w-4 h-4" />
               Add Task
             </button>
+          </div>
+          <div className="board-header-member">
+            <h1 className="board-title-member">Members</h1>
+            <div className="board-member-avatar">
+              {availableBoardMembers.map((member) =>
+                member?.profilePic ? (
+                  <div className="box" key={member._id}>
+                    <img
+                      key={member._id || member.id} // Make sure to use a unique key
+                      src={member.profilePic}
+                      alt="Profile"
+                      className="profile-avatar"
+                    />
+                    <span>
+                      {member.fullName.length > 4
+                        ? `${member.fullName.slice(0, 4)}...`
+                        : member.fullName}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="box" key={member._id}>
+                    <div
+                      key={member._id || member.id}
+                      className="profile-avatar-default"
+                    >
+                      <User />
+                    </div>
+                    <span>
+                      {member.fullName.length > 5
+                        ? `${member.fullName.toLowerCase().slice(0, 3)}...`
+                        : member.fullName.toLowerCase()}
+                    </span>
+                  </div>
+                )
+              )}
+            </div>
           </div>
         </header>
 
@@ -510,7 +579,7 @@ export default function BoardContainer() {
                   value={selectedAssignee}
                   onChange={(e) => setSelectedAssignee(e.target.value)}
                 >
-                  {availableMembers.map((member) => (
+                  {availableBoardMembers.map((member) => (
                     <option key={member._id} value={member._id}>
                       {member.fullName}
                     </option>

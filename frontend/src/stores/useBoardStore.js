@@ -122,14 +122,15 @@ export const useBoardStore = create((set, get) => ({
         toast.error("Board is not selected");
         return;
       }
-
-      const members = selectedBoard.members || [];
+      const res = await axiosInstance.get(`/boards/${selectedBoard._id}`);
+      const members = res.data.members;
+      // console.log("Available membeers : ",members);
       set({ availableBoardMembers: members });
 
       toast.success("Board members loaded successfully");
     } catch (error) {
-      console.log("Error while fetching board members:", error);
-      toast.error("Error while fetching board members");
+      // console.log("Error while fetching board members:", error);
+      toast.error("Error while fetching board members"||error.response?.data?.message);
     }
   },
 }));

@@ -40,7 +40,11 @@ export default function BoardList() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!boardName) return;
-    await createBoard({ name: boardName });
+    try {
+      await createBoard({ name: boardName });
+    } catch (error) {
+      
+    }
     setBoardName("");
     setShowModal(false);
   };
@@ -70,7 +74,7 @@ export default function BoardList() {
   };
 
   const handleAddMembers = (board) => {
-    console.log("Boardss : ", board);
+    // console.log("Boardss : ", board);
     setSelectedBoardForMembers(board);
     setShowMembersModal(true);
     setShowOptionsMenu(null);
@@ -79,7 +83,7 @@ export default function BoardList() {
   };
 
   const handleMemberToggle = (member) => {
-    console.log("Handle member toggle works ", member);
+    // console.log("Handle member toggle works ", member);
     setSelectedMembers((prev) =>
       prev.includes(member._id)
         ? prev.filter((id) => id !== member._id)
@@ -478,7 +482,7 @@ export default function BoardList() {
               <div className="modal-actions">
                 <button
                   type="button"
-                  className="cancel-btn"
+                  className="board-cancel-btn"
                   onClick={() => setShowModal(false)}
                 >
                   Cancel

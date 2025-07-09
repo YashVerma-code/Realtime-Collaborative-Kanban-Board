@@ -109,7 +109,6 @@
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
 }
 
-
 .board-item-content {
   display: flex;
   align-items: center;
@@ -174,7 +173,7 @@
   z-index: 1000;
   min-width: 140px;
   overflow: hidden;
-   pointer-events: auto;
+  pointer-events: auto;
 
   /* Optional fix for overlap */
   transform: translateY(8px);
@@ -240,7 +239,6 @@
 }
 
 .board-hover-indicator {
-  
   transform: translateY(-50%);
   width: 6px;
   height: 6px;
@@ -414,22 +412,35 @@
 }
 
 .cancel-btn,
-.create-btn ,.cancel-addmem-btn{
-  padding: 0.75rem 1.5rem;
-  border: none;
+.create-btn,
+.cancel-addmem-btn {
+  padding: 0.75rem 1rem;
   border-radius: 10px;
   cursor: pointer;
+  border: none;
   font-weight: 600;
   transition: all 0.3s ease;
   font-size: 0.875rem;
 }
+.board-cancel-btn {
+  transition: all 0.3s ease;
+  border: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+  color: #374151;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-.cancel-btn,.cancel-addmem-btn {
+.cancel-btn,
+.cancel-addmem-btn {
   background: #f3f4f6;
   color: #6b7280;
 }
 
-.cancel-btn:hover,.cancel-addmem-btn {
+.cancel-btn:hover,
+.cancel-addmem-btn {
   background: #e5e7eb;
   color: #374151;
 }
@@ -441,6 +452,10 @@
 }
 
 .create-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+.board-cancel-btn:hover{
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
@@ -631,7 +646,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  width: 100%; 
+  width: 100%;
   gap: 0.5rem;
   justify-content: flex-end;
 }
@@ -652,10 +667,10 @@
 .save-btn:hover {
   background: linear-gradient(135deg, #5a67d8, #6b46c1);
 }
-.cancel-btn{
+.cancel-btn {
   text-align: center;
   height: 30px;
-   padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem;
 }
 /* .board-item.showing-options {
   margin-bottom: 6rem;

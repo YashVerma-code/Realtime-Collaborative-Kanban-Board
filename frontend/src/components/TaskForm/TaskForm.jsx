@@ -9,7 +9,7 @@ const TaskForm = ({
   editingTask = null,
   isEditing = false,
 }) => {
-  const { availableBoardMembers,fetchboardMembers  } = useBoardStore();
+  const { availableBoardMembers,fetchboardMembers ,selectedBoard } = useBoardStore();
   const {
     isCreatingTask,
     createTask,
@@ -18,7 +18,6 @@ const TaskForm = ({
     isSmartAssigning,
     setAssignedUser,updateTask,isUpdatingTask
   } = useTaskStore();
-  const { selectedBoard } = useBoardStore();
   const [formData, setFormData] = useState({
     title: editingTask?.title || "",
     description: editingTask?.description || "",
@@ -38,10 +37,11 @@ const TaskForm = ({
     }
   }, [assignedUser]);
 
-  useEffect(() => {
-    // console.log("Available members: ", availableBoardMembers);
-    fetchboardMembers();
-  }, [selectedBoard]);
+   useEffect(() => {
+    if (selectedBoard) {
+      fetchboardMembers();
+    }
+  }, [selectedBoard, fetchboardMembers]);
 
   useEffect(() => {
     if (isEditing && editingTask?.assignedTo) {
@@ -204,7 +204,7 @@ const TaskForm = ({
                 <option value="">Select team member...</option>
                 {availableBoardMembers.map((member) => (
                   <option key={member._id} value={member._id}>
-                    {member.fullName.toUpperCase()}
+                    {member?.fullName?.toUpperCase()}
                   </option>
                 ))}
               </select>
