@@ -28,19 +28,11 @@ This task management system provides teams with powerful tools to organize, assi
 
 ### Frontend
 - **React.js** - Frontend framework
-- **Redux Toolkit** - State management
+- **Zustand** - State Management
 - **React Router** - Client-side routing
 - **Axios** - HTTP client
 - **Socket.io Client** - Real-time updates
-- **Tailwind CSS** - Styling framework
-- **React Hook Form** - Form handling
-- **React Query** - Server state management
 
-### Development Tools
-- **Nodemon** - Development server
-- **Concurrently** - Run multiple commands
-- **ESLint** - Code linting
-- **Prettier** - Code formatting
 
 ## 📋 Prerequisites
 
@@ -79,11 +71,11 @@ Edit the `.env` file in the backend directory:
 
 ```env
 # Server Configuration
-PORT=5000
+PORT=8080
 NODE_ENV=development
 
 # Database
-MONGODB_URI=mongodb://localhost:27017/taskmanagement
+MONGODB_URI=mongodb://localhost:27017/<databasename>
 # Or for MongoDB Atlas:
 # MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/taskmanagement
 
@@ -94,8 +86,13 @@ JWT_EXPIRE=7d
 # CORS Configuration
 CLIENT_URL=http://localhost:3000
 
-# Socket.io Configuration
-SOCKET_PORT=5001
+# Cloudinary Configuration
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+CLOUDINARY_CLOUD_NAME=
+
+FRONTEND_URL=https://realtime-collaborative-kanban-board.vercel.app
+
 ```
 
 ### 4. Frontend Setup
@@ -117,35 +114,13 @@ Edit the `.env` file in the frontend directory:
 
 ```env
 # API Configuration
-REACT_APP_API_URL=http://localhost:5000/api
-REACT_APP_SOCKET_URL=http://localhost:5000
+VITE_BACKEND_BASE_URL=http://localhost:5000
+VITE_BACKEND_API_URL=http://localhost:5000/api
 
-# App Configuration
-REACT_APP_NAME=Task Management System
-REACT_APP_VERSION=1.0.0
 ```
-
-### 6. Database Setup
-
-If using local MongoDB:
-
-```bash
-# Start MongoDB service
-mongod
-
-# (Optional) Create database and initial data
-# The application will create collections automatically
-```
-
-For MongoDB Atlas:
-1. Create a cluster on [MongoDB Atlas](https://cloud.mongodb.com/)
-2. Create a database user
-3. Whitelist your IP address
-4. Use the connection string in your `.env` file
-
 ### 7. Running the Application
 
-#### Option 1: Run Backend and Frontend Separately
+#### Run Backend and Frontend Separately
 
 **Terminal 1 - Backend:**
 ```bash
@@ -159,33 +134,11 @@ cd frontend
 npm start
 ```
 
-#### Option 2: Run Both Concurrently (from root directory)
-
-```bash
-# Install concurrently globally (if not installed)
-npm install -g concurrently
-
-# Run both backend and frontend
-npm run dev
-```
-
-Add this script to your root `package.json`:
-
-```json
-{
-  "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd backend && npm run dev",
-    "client": "cd frontend && npm start"
-  }
-}
-```
 
 ### 8. Access the Application
 
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:5000
-- **API Documentation**: http://localhost:5000/api-docs (if Swagger is configured)
 
 ## 🎯 Features
 
@@ -208,7 +161,6 @@ Add this script to your root `package.json`:
 - Task status tracking (Todo, In Progress, Done)
 - Task assignment to team members
 - Task priority levels
-- Due date management
 - Task descriptions and comments
 
 #### 4. **Smart Assignment System**
@@ -223,21 +175,21 @@ Add this script to your root `package.json`:
 - Instant notifications for task updates
 - Collaborative editing with conflict resolution
 
-#### 6. **Conflict Resolution**
+<!-- #### 6. **Conflict Resolution**
 - Optimistic locking for concurrent edits
 - Version control for task updates
 - Automatic conflict detection
-- User-friendly conflict resolution interface
+- User-friendly conflict resolution interface -->
 
-### Advanced Features
-
+<!-- ### Advanced Features -->
+<!-- 
 #### 7. **Dashboard Analytics**
 - Task completion statistics
 - Team performance metrics
 - Workload distribution charts
-- Progress tracking and reporting
+- Progress tracking and reporting -->
 
-#### 8. **Responsive Design**
+#### 6. **Responsive Design**
 - Mobile-friendly interface
 - Adaptive layouts for all screen sizes
 - Touch-friendly interactions
@@ -344,7 +296,7 @@ const getSmartAssignedUser = async (boardId) => {
 - **Automatic Efficiency**: Reduces manual assignment overhead
 - **Team Productivity**: Optimizes resource utilization
 - **Scalability**: Works efficiently with large teams
-
+<!-- 
 ## ⚔️ Conflict Handling Logic
 
 The conflict resolution system manages concurrent edits in real-time collaborative environments.
@@ -436,68 +388,16 @@ const handleTaskUpdate = async (taskId, updates) => {
 1. **Data Integrity**: Prevents data loss from concurrent edits
 2. **User Experience**: Clear conflict indication and resolution
 3. **Real-time Updates**: Instant synchronization across clients
-4. **Scalability**: Handles multiple simultaneous users efficiently
+4. **Scalability**: Handles multiple simultaneous users efficiently -->
 
 ## 🌐 Deployment
 
 ### Live Application
-🔗 **[Task Management System - Live Demo](https://your-app-domain.com)**
+🔗 **[Task Management System - Live Demo](https://realtime-collaborative-kanban-board.vercel.app/)**
 
 ### Demo Video
-📹 **[Watch Demo Video](https://your-demo-video-link.com)**
+📹 **[Watch Demo Video](https://drive.google.com/drive/folders/1ohMk9oN_YXHf9EF43r7z3_LEu-1AJeo4?usp=sharing)**
 
-### Backend Deployment (Heroku/Railway/Vercel)
-
-1. Create a new app on your platform
-2. Connect your GitHub repository
-3. Set environment variables
-4. Deploy the backend
-
-### Frontend Deployment (Netlify/Vercel)
-
-1. Build the React app: `npm run build`
-2. Deploy the build folder
-3. Configure API endpoints
-4. Set up domain and SSL
-
-### Environment Variables for Production
-
-```env
-# Backend Production
-NODE_ENV=production
-PORT=443
-MONGODB_URI=mongodb+srv://...
-JWT_SECRET=your-production-secret
-CLIENT_URL=https://your-frontend-domain.com
-
-# Frontend Production
-REACT_APP_API_URL=https://your-backend-domain.com/api
-REACT_APP_SOCKET_URL=https://your-backend-domain.com
-```
-
-## 🧪 Testing
-
-### Run Tests
-
-```bash
-# Backend tests
-cd backend
-npm test
-
-# Frontend tests
-cd frontend
-npm test
-
-# Run all tests
-npm run test:all
-```
-
-### Test Coverage
-
-```bash
-# Generate coverage report
-npm run test:coverage
-```
 
 ## 🤝 Contributing
 
@@ -510,12 +410,6 @@ npm run test:coverage
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Team
-
-- **[Your Name]** - Full Stack Developer
-- **[Team Member 2]** - Frontend Developer
-- **[Team Member 3]** - Backend Developer
 
 ## 🐛 Known Issues
 
@@ -533,10 +427,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Advanced analytics dashboard
 - [ ] Custom workflow automation
 
-## 📞 Support
-
-For support, email support@yourdomain.com or create an issue in the GitHub repository.
-
 ---
 
-**Made with ❤️ by [Your Team Name]**
+**Made with ❤️ by Yash**
