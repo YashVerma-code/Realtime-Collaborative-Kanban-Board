@@ -13,7 +13,7 @@ const generateToken = (userId, res) => {
     secure: process.env.NODE_ENV === "production", // will be true ✅
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // must be "none" in prod ✅
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    domain: process.env.NODE_ENV === "production" ? ".onrender.com" : undefined,
+    path: '/',
   });
 
   return token;
